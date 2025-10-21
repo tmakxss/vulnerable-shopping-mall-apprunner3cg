@@ -34,9 +34,10 @@ run:
 
     # 接続はプーリング(6543)＋SSL必須
     - name: DATABASE_URL
-      value: "postgresql://postgres:CSCVSMTEST1021@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=require"
+      value: "postgresql://postgres.fwotktpzxkoiplcjzeoc:CSCVSMTEST1021@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+    
     - name: SUPABASE_DB_URL
-      value: "postgresql://postgres:CSCVSMTEST1021@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=require"
+      value: "postgresql://postgres.fwotktpzxkoiplcjzeoc:CSCVSMTEST1021@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
 
     # 直接接続（必要時のみ利用）
     - name: DIRECT_URL
