@@ -1,13 +1,23 @@
-# apprunner.yaml
+# apprunner.yaml（リポジトリのソースディレクトリ直下、例: ルート）
 version: 1.0
 runtime: python311
 
+build:
+  # App Runner は build.commands が必須扱いになるケースがあるため no-op を明示
+  commands:
+    build:
+      - echo "noop build"
+
 run:
+  # Python 3.11 は revised build。依存は /app 外に入るため pre-run で pip3 を使う
+  #（build フェーズで入れると消える可能性がある）
   runtime-version: 3.11
-  # 依存は revised build の推奨どおり pre-run で入れる
   pre-run:
     - pip3 install -r requirements.txt
-  # Flaskの起動。api/index.py 内のトップレベル変数 app を使う
-  command: flask --app api.index:app run --host=0.0.0.0 --port 8080
+
+  # エントリポイント: api/index.py 内の app（= Flask アプリ）を CLI で起動
+  # gunicorn を使わずとも動くため、依存が薄く確実（ポートは 8080）
+  command: python3 -m flask --app api.index:app run --host=0.0.0.0 --port 8080
+
   network:
     port: 8080
